@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ivan Nieto",
-  "license": "GNU General Public License v3",
+  "license": "GPL-3.0",
   "dependencies": {
     "cheerio": "^0.22.0",
     "events": "^1.1.1",
@@ -15,7 +15,12 @@
     "fs": "0.0.1-security",
     "js2xmlparser": "^2.0.2",
     "jsonfile": "^2.4.0",
+    "morgan": "^1.8.1",
     "path": "^0.12.7",
     "request": "^2.79.0"
+  },
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/oomemory/series-feeder"
   }
 }

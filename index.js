@@ -4,6 +4,10 @@ var request = require('request');
 var cheerio = require('cheerio');
 var json = require('jsonfile');
 var js2xmlparser = require('js2xmlparser');
+var fs = require('fs');
+
+// logger module
+var morgan = require('morgan');
 
 // server
 var port = 8000;
@@ -18,9 +22,8 @@ function readTorrentURL(res, torrentURL, callback) {
  			console.log(err);
 			server_response.sendStatus(500);
 		} else {
-	  	//bulkData = body;
-			//eventEmitter.emit('endReadingBulkData');
-			console.log('Torrent page ' + torrentURL + ' successfully read');
+
+//			console.log('Torrent page ' + torrentURL + ' successfully read');
 			callback(res, body);
 		}
 	});
@@ -63,7 +66,7 @@ var scrapeForTorrents = function scrapeForTorrents(res, body) {
 			"item": scrappedData
 	}
 
-	console.log('Page scrapped with ' + scrappedData.length.toString() + ' items');
+//	console.log('Page scrapped with ' + scrappedData.length.toString() + ' items');
 	generateXML(res, dataXML);
 }
 
@@ -72,7 +75,7 @@ var scrapeForTorrents = function scrapeForTorrents(res, body) {
 // -------------------------------------------------------------------------------
 var generateXML = function generateXML(res, dataXML) {
 
-	var rssContent = 'No data';
+	var rssContent = '<?xml version="1.0" encoding="UTF-8"?><title>No data</title></xml>';
 	if ( dataXML.item.length > 0 ) {
 		var options = {
 		    useCDATA: true
@@ -81,7 +84,6 @@ var generateXML = function generateXML(res, dataXML) {
 		rssContent = js2xmlparser.parse("channel", dataXML, options);
 	}
 
-	console.log('Res sent with RSS data');
 	res.set('Content-Type', 'text/xml');
 	res.send( rssContent );
 }
@@ -129,15 +131,24 @@ function getMatches(string, regex, index) {
 // -----------------------------------------------
 // -----------------------------------------------
 
+// log output handling very very simple and dirty
+app.use(morgan('short'));
+var access = fs.createWriteStream('./logs/access.log');
+process.stdout.write = access.write.bind(access);
+
 // GET route
 app.get('/elitetorrent/series', function (req, res) {
 	// trigger rss parser for elitetorrent
-	// the callback will invoke res
-//	server_response = res;
 	readTorrentURL(res, 'http://www.elitetorrent.net/categoria/4/series/modo:listado', scrapeForTorrents);
 });
 
-// serter start up
+// default route to 404 error
+app.get('/*', function (req, res) {
+  res.sendStatus(404);
+})
+
+// server start up
 app.listen(port, function () {
-  console.log('Spanish torrent parser listening on port ' + port.toString());
+	var nowDate = new Date();
+  console.log('Spanish torrent parser listening on port ' + port.toString() + ' at ' + nowDate.toString());
 });
