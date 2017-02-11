@@ -1,0 +1,21 @@
+{
+  "name": "series-feeder",
+  "version": "1.0.0",
+  "description": "Automatic RSS feeder creator for some popular Spanish torrent sites",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ivan Nieto",
+  "license": "GNU General Public License v3",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "events": "^1.1.1",
+    "express": "^4.14.1",
+    "fs": "0.0.1-security",
+    "js2xmlparser": "^2.0.2",
+    "jsonfile": "^2.4.0",
+    "path": "^0.12.7",
+    "request": "^2.79.0"
+  }
+}
