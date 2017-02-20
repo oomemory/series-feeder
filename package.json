@@ -13,6 +13,7 @@
     "events": "^1.1.1",
     "express": "^4.14.1",
     "fs": "0.0.1-security",
+    "iconv-lite": "^0.4.15",
     "js2xmlparser": "^2.0.2",
     "jsonfile": "^2.4.0",
     "morgan": "^1.8.1",
@@ -20,7 +21,7 @@
     "request": "^2.79.0"
   },
   "repository": {
-  "type": "git",
-  "url": "https://github.com/oomemory/series-feeder"
+    "type": "git",
+    "url": "https://github.com/oomemory/series-feeder"
   }
 }
